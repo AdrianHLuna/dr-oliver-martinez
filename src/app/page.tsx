@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, GraduationCap, Award, ShieldCheck, Stethoscope, Phone, MessageCircle } from "lucide-react";
 import { doctor, diseases, services, symptoms } from "@/data";
@@ -5,6 +6,7 @@ import { formatCredentials } from "@/lib/credentials";
 import { generateHomeSchemas } from "@/lib/schemas";
 import StructuredData from "@/components/StructuredData";
 import MasonryGrid from "@/components/MasonryGrid";
+import DoctorPortrait from "@/components/DoctorPortrait";
 
 export default function HomePage() {
   const whatsappHref = `https://wa.me/${doctor.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(
@@ -15,11 +17,25 @@ export default function HomePage() {
     <>
       <StructuredData data={generateHomeSchemas()} />
 
-      {/* Hero centrado y simétrico — a sangre completa, min-h-screen, muy
-          distinto al bento/split/diagonal/editorial de los otros 4 sitios. */}
+      {/* Hero con imagen de fondo hero.jpg y capa superpuesta para la foto del doctor */}
       <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-b from-[var(--color-navy)] via-[#1c3565] to-[var(--color-steel)] text-white">
-        {/* Ambientación "pulmonar" abstracta: círculos que respiran (pulso lento) */}
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        {/* Imagen de fondo hero.jpg */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/hero.jpg"
+            alt="Dr. Oliver Martínez - Consultorio Neumología Hospital San José"
+            fill
+            priority
+            className="object-cover object-center scale-105 brightness-75"
+            sizes="100vw"
+          />
+          {/* Degradados de protección para legibilidad de texto y unión suave */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-navy)]/95 via-[var(--color-navy)]/85 to-[var(--color-navy)]/70" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-navy)] via-transparent to-[var(--color-navy)]/40" />
+        </div>
+
+        {/* Ambientación "pulmonar" abstracta: círculos que respiran */}
+        <div className="pointer-events-none absolute inset-0 z-0 opacity-40" aria-hidden="true">
           <div className="breathe absolute left-1/2 top-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10" />
           <div className="breathe breathe-delay absolute left-1/2 top-1/2 h-[380px] w-[380px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[var(--color-sky-pale)]/25" />
           <div className="absolute left-1/2 top-1/2 h-[220px] w-[220px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--color-sky)]/20 blur-3xl" />
@@ -27,91 +43,111 @@ export default function HomePage() {
           <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-[var(--color-sky)]/15 blur-3xl" />
         </div>
 
-        <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 py-24 text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[var(--color-sky-pale)] backdrop-blur-xs">
-            {doctor.specialty} · {doctor.city}, {doctor.state}
-          </span>
+        <div className="relative z-10 mx-auto max-w-6xl px-6 py-20 sm:py-28">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-10">
+            {/* Columna de texto principal */}
+            <div className="flex flex-col items-center text-center lg:col-span-7 lg:items-start lg:text-left">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[var(--color-sky-pale)] backdrop-blur-xs">
+                {doctor.specialty} · {doctor.city}, {doctor.state}
+              </span>
 
-          <h1 className="text-4xl font-bold leading-[1.1] sm:text-5xl md:text-6xl">
-            {doctor.title} {doctor.name}
-          </h1>
+              <h1 className="mt-4 text-4xl font-bold leading-[1.1] sm:text-5xl md:text-6xl">
+                {doctor.title} {doctor.name}
+              </h1>
 
-          <p className="max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
-            {doctor.specialistTitle} en el Hospital San José de Hermosillo. Diagnóstico y tratamiento
-            integral de enfermedades del sistema respiratorio, desde el asma hasta estudios especializados
-            de función pulmonar y del sueño.
-          </p>
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
+                {doctor.specialistTitle} en el Hospital San José de Hermosillo. Diagnóstico y tratamiento
+                integral de enfermedades del sistema respiratorio, desde el asma hasta estudios especializados
+                de función pulmonar y del sueño.
+              </p>
 
-          <div className="mt-2 flex flex-wrap items-center justify-center gap-4">
-            <a
-              href={whatsappHref}
-              target="_blank"
-              rel="noreferrer"
-              className="bounce-hover inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--color-sky)] px-7 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-lift)]"
-            >
-              <MessageCircle className="h-4 w-4" aria-hidden="true" />
-              <span>Agendar cita por WhatsApp</span>
-            </a>
-            <a
-              href={`tel:${doctor.phone}`}
-              className="bounce-hover inline-flex items-center justify-center gap-2 rounded-2xl border border-white/30 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-xs"
-            >
-              <Phone className="h-4 w-4" aria-hidden="true" />
-              <span>Llamar al consultorio</span>
-            </a>
-          </div>
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
+                <a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="bounce-hover inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--color-sky)] px-7 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-lift)]"
+                >
+                  <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                  <span>Agendar cita por WhatsApp</span>
+                </a>
+                <a
+                  href={`tel:${doctor.phone}`}
+                  className="bounce-hover inline-flex items-center justify-center gap-2 rounded-2xl border border-white/30 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-xs"
+                >
+                  <Phone className="h-4 w-4" aria-hidden="true" />
+                  <span>Llamar al consultorio</span>
+                </a>
+              </div>
 
-          <div className="glass-panel mt-6 flex items-center gap-2 rounded-full px-4 py-2 text-xs text-[var(--color-navy)]">
-            <ShieldCheck className="h-4 w-4 shrink-0 text-[var(--color-sky)]" aria-hidden="true" />
-            <span>{formatCredentials(doctor)}</span>
+              <div className="glass-panel mt-6 flex items-center gap-2 rounded-full px-4 py-2 text-xs text-[var(--color-navy)]">
+                <ShieldCheck className="h-4 w-4 shrink-0 text-[var(--color-sky)]" aria-hidden="true" />
+                <span>{formatCredentials(doctor)}</span>
+              </div>
+            </div>
+
+            {/* Columna de la foto del doctor superpuesta sobre el hero background */}
+            <div className="lg:col-span-5">
+              <DoctorPortrait />
+            </div>
           </div>
         </div>
       </section>
 
       {/* Sobre el especialista */}
-      <section id="sobre-mi" className="mx-auto max-w-4xl px-6 py-20 text-center">
-        <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-sky)]">
-          Sobre el especialista
-        </span>
-        <h2 className="mt-2 text-3xl font-bold text-[var(--color-navy)] sm:text-4xl">
-          {doctor.title} {doctor.name}
-        </h2>
-        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[var(--color-slate)] sm:text-lg">
-          {doctor.bio}
-        </p>
-        <p className="mx-auto mt-5 max-w-xl italic text-[var(--color-navy)]/80">&ldquo;{doctor.philosophy}&rdquo;</p>
+      <section id="sobre-mi" className="mx-auto max-w-6xl px-6 py-20">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-12">
+          {/* Foto del doctor en la sección Sobre el Especialista */}
+          <div className="lg:col-span-5">
+            <DoctorPortrait variant="about" />
+          </div>
 
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <span className="inline-flex items-center gap-2 rounded-2xl border border-[var(--color-line)] bg-[var(--color-cloud)] px-4 py-2 text-xs font-semibold text-[var(--color-navy)]">
-            <GraduationCap className="h-4 w-4 text-[var(--color-sky)]" aria-hidden="true" />
-            Céd Prof: {doctor.cedula} ({doctor.cedulaInstitucion})
-          </span>
-          {doctor.cedulaEspecialidad && (
-            <span className="inline-flex items-center gap-2 rounded-2xl border border-[var(--color-line)] bg-[var(--color-cloud)] px-4 py-2 text-xs font-semibold text-[var(--color-navy)]">
-              <Award className="h-4 w-4 text-[var(--color-sky)]" aria-hidden="true" />
-              Céd Esp: {doctor.cedulaEspecialidad} ({doctor.cedulaEspecialidadInstitucion})
+          {/* Información biográfica y profesional */}
+          <div className="flex flex-col items-center text-center lg:col-span-7 lg:items-start lg:text-left">
+            <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-sky)]">
+              Sobre el especialista
             </span>
-          )}
-        </div>
+            <h2 className="mt-2 text-3xl font-bold text-[var(--color-navy)] sm:text-4xl">
+              {doctor.title} {doctor.name}
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-[var(--color-slate)] sm:text-lg">
+              {doctor.bio}
+            </p>
+            <p className="mt-4 italic text-[var(--color-navy)]/80">&ldquo;{doctor.philosophy}&rdquo;</p>
 
-        <div className="mx-auto mt-10 max-w-xl text-left">
-          <p className="text-xs font-bold uppercase tracking-widest text-[var(--color-sky)]">
-            Formación académica
-          </p>
-          <ul className="mt-3 space-y-2">
-            {doctor.education.map((item) => (
-              <li
-                key={item.degree}
-                className="flex flex-col gap-1 rounded-2xl border border-[var(--color-line)] bg-white p-4 text-sm shadow-[var(--shadow-soft)] sm:flex-row sm:items-baseline sm:justify-between"
-              >
-                <span className="flex items-center gap-2 font-semibold text-[var(--color-navy)]">
-                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-sky)]" />
-                  {item.degree}
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+              <span className="inline-flex items-center gap-2 rounded-2xl border border-[var(--color-line)] bg-[var(--color-cloud)] px-4 py-2 text-xs font-semibold text-[var(--color-navy)]">
+                <GraduationCap className="h-4 w-4 text-[var(--color-sky)]" aria-hidden="true" />
+                Céd Prof: {doctor.cedula} ({doctor.cedulaInstitucion})
+              </span>
+              {doctor.cedulaEspecialidad && (
+                <span className="inline-flex items-center gap-2 rounded-2xl border border-[var(--color-line)] bg-[var(--color-cloud)] px-4 py-2 text-xs font-semibold text-[var(--color-navy)]">
+                  <Award className="h-4 w-4 text-[var(--color-sky)]" aria-hidden="true" />
+                  Céd Esp: {doctor.cedulaEspecialidad} ({doctor.cedulaEspecialidadInstitucion})
                 </span>
-                <span className="text-xs text-[var(--color-slate)] sm:text-sm">{item.institution}</span>
-              </li>
-            ))}
-          </ul>
+              )}
+            </div>
+
+            <div className="mt-8 w-full max-w-xl text-left">
+              <p className="text-xs font-bold uppercase tracking-widest text-[var(--color-sky)]">
+                Formación académica
+              </p>
+              <ul className="mt-3 space-y-2">
+                {doctor.education.map((item) => (
+                  <li
+                    key={item.degree}
+                    className="flex flex-col gap-1 rounded-2xl border border-[var(--color-line)] bg-white p-4 text-sm shadow-[var(--shadow-soft)] sm:flex-row sm:items-baseline sm:justify-between"
+                  >
+                    <span className="flex items-center gap-2 font-semibold text-[var(--color-navy)]">
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-sky)]" />
+                      {item.degree}
+                    </span>
+                    <span className="text-xs text-[var(--color-slate)] sm:text-sm">{item.institution}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 

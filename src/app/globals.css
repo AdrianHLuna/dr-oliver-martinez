@@ -1,0 +1,161 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+/*
+ * Dr. Oliver Martínez González — Neumología (Hermosillo, Sonora).
+ * Dirección de diseño: "Respiración" — deliberadamente distinta a los 4
+ * sitios ya registrados (bento oscuro de dr-raul-vega, split asimétrico
+ * carbon/dorado de dr-raul-mu-oz-gomez, corte diagonal navy de
+ * dr-aram-alarcon, índice editorial claro/azul de dr-gustavo-alvarez):
+ * Hero centrado y simétrico sobre imagen atmosférica a sangre completa,
+ * masonry de tarjetas de tamaño mixto, animación rápida y enérgica con
+ * springs y "bounce" en vez de fades lentos o cortes mecánicos.
+ * Paleta oficial real de marca (PALETA DE COLORES DR OLIVER M_compressed.pdf).
+ */
+:root {
+  --color-navy: #15234a; /* primario oficial — ink de autoridad clínica */
+  --color-sky: #4a9fdc; /* acento vivo oficial */
+  --color-sky-pale: #92cee9; /* celeste pálido oficial */
+  --color-steel: #3877a5; /* secundario oficial — azul acero */
+  --color-teal: #3f8f84; /* secundario oficial — verde-azulado */
+  --color-mist: #d3e0e9; /* gris azulado oficial */
+  --color-seafoam: #b2d2ce; /* gris azulado oficial */
+  --color-cloud: #f4f9fc; /* fondo dominante claro y "respirable" */
+  --color-line: #dfeaf2;
+  --color-slate: #52667e;
+
+  --background: #ffffff;
+  --foreground: var(--color-navy);
+
+  /* Animación rápida y enérgica: springs cortos con ligero rebote. */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-snap: cubic-bezier(0.22, 0.9, 0.36, 1.15);
+  --duration-fast: 0.22s;
+  --duration-snap: 0.32s;
+
+  --shadow-soft: 0 8px 24px -8px rgba(21, 35, 74, 0.16);
+  --shadow-lift: 0 18px 38px -10px rgba(21, 35, 74, 0.22);
+  --shadow-glow: 0 0 0 6px rgba(74, 159, 220, 0.14);
+}
+
+@theme inline {
+  --color-primary: var(--color-navy);
+  --color-primary-foreground: #ffffff;
+  --color-accent: var(--color-sky);
+  --color-accent-foreground: #ffffff;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--color-cloud);
+  --color-muted-foreground: var(--color-slate);
+  --color-border: var(--color-line);
+  --font-sans: var(--font-roboto);
+  --font-heading: var(--font-roboto);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-roboto), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-roboto), system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* Micro-interacción firma del sitio: bounce corto y enérgico en hover. */
+.bounce-hover {
+  transition: transform var(--duration-fast) var(--ease-spring), box-shadow var(--duration-fast) var(--ease-spring);
+}
+.bounce-hover:hover {
+  transform: translateY(-4px) scale(1.015);
+  box-shadow: var(--shadow-lift);
+}
+.bounce-hover:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.bounce-pop {
+  transition: transform var(--duration-fast) var(--ease-spring);
+}
+.bounce-pop:hover {
+  transform: scale(1.06);
+}
+.bounce-pop:active {
+  transform: scale(0.94);
+}
+
+/* Fallback de imagen: degradado azul cielo + línea de acento (patrón
+ * heredado de dr-gustavo-alvarez, adaptado a esta paleta más clara). */
+.image-fallback {
+  background: radial-gradient(circle at 32% 24%, #eaf5fc 0%, var(--color-sky-pale) 55%, var(--color-steel) 130%);
+  position: relative;
+  overflow: hidden;
+}
+.image-fallback::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-sky), var(--color-navy));
+}
+
+/* Tarjeta masonry con ritmo de aparición escalonado (usado con framer-motion
+ * o, sin JS, como fallback CSS puro). */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.rise-in {
+  animation: rise-in var(--duration-snap) var(--ease-spring) both;
+}
+
+/* Panel de vidrio ligero sobre el Hero atmosférico */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* Respiración: pulso lento tipo "inhalar/exhalar" para elementos decorativos
+ * del Hero — distinto del bounce rápido de las micro-interacciones. */
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.85;
+  }
+}
+.breathe {
+  animation: breathe 4.5s ease-in-out infinite;
+}
+.breathe-delay {
+  animation-delay: 1.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bounce-hover,
+  .bounce-pop,
+  .rise-in,
+  .breathe {
+    animation: none !important;
+    transition: none !important;
+  }
+}

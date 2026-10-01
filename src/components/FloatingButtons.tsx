@@ -1,22 +1,16 @@
 "use client";
 
-import { Phone, MessageCircle } from "lucide-react";
+import { Phone, Calendar } from "lucide-react";
 import { doctor } from "@/data";
 import { trackEvent } from "@/lib/analytics";
 
 interface FloatingButtonsProps {
-  /** Contexto de la página para el mensaje de WhatsApp. Ej: "asma" */
+  /** Contexto opcional de la página */
   context?: string;
 }
 
 const FloatingButtons = ({ context }: FloatingButtonsProps) => {
-  const cleanWhatsapp = doctor.whatsapp.replace(/\D/g, "");
-
-  const message = context
-    ? `Hola, ${doctor.title} ${doctor.name}. Vi su página sobre ${context} y me gustaría agendar una valoración.`
-    : `Hola, ${doctor.title} ${doctor.name}. Vi su página web y me gustaría agendar una cita.`;
-
-  const whatsappLink = `https://wa.me/${cleanWhatsapp}?text=${encodeURIComponent(message)}`;
+  const doctoraliaLink = doctor.doctoraliaUrl || "https://www.doctoralia.com.mx/perfil/oliver-martinez-gonzalez";
   const phoneLink = `tel:${doctor.phone}`;
 
   const buttonBaseClass =
@@ -28,14 +22,14 @@ const FloatingButtons = ({ context }: FloatingButtonsProps) => {
     <div className="fixed right-5 bottom-5 hidden md:flex flex-col gap-4 z-50">
       <a
         target="_blank"
-        href={whatsappLink}
+        href={doctoraliaLink}
         rel="noreferrer"
-        aria-label="Contactar por WhatsApp"
-        className={`${buttonBaseClass} bg-[#25D366]`}
-        onClick={() => trackEvent("clic_whatsapp", { source: "floating" })}
+        aria-label="Reservar cita en Doctoralia"
+        className={`${buttonBaseClass} bg-[#00b2a9]`}
+        onClick={() => trackEvent("clic_doctoralia", { source: "floating" })}
       >
-        <span className={`${pulseClass} bg-[#25D366]`} />
-        <MessageCircle size={26} />
+        <span className={`${pulseClass} bg-[#00b2a9]`} />
+        <Calendar size={24} />
       </a>
 
       <a

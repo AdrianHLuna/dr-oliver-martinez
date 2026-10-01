@@ -1,6 +1,5 @@
 interface MapFacadeProps {
   address: string;
-  whatsapp: string;
 }
 
 /**

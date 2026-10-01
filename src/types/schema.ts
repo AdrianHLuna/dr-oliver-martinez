@@ -74,7 +74,8 @@ export const DoctorProfileSchema = z.object({
   cedulaSubespecialidadInstitucion: z.string().optional(),
   cofepris: z.string().optional(),
   phone: z.string().regex(E164, "Formato E.164 sin espacios, ej: +529611234567"),
-  whatsapp: z.string().regex(E164, "Formato E.164 sin espacios"),
+  whatsapp: z.string().regex(E164, "Formato E.164 sin espacios").optional(),
+  doctoraliaUrl: z.string().url().optional(),
   // Línea directa de urgencias, distinta del teléfono de citas — las señales
   // de alarma (§3.8 del manual) deben dirigir aquí, nunca a WhatsApp.
   emergencyPhone: z.string().regex(E164, "Formato E.164 sin espacios").optional(),

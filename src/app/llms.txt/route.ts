@@ -22,7 +22,7 @@ export async function GET() {
 - Horario: ${doctor.schedule}
 - Seguros: ${doctor.insurances?.join(", ") || "No especificado"}
 - Google Maps: ${doctor.googleMapsUrl}
-- WhatsApp: ${doctor.whatsapp}
+- Doctoralia: ${doctor.doctoraliaUrl}
 - Teléfono: ${doctor.phone}
 
 ## Enfermedades que Trata
@@ -60,7 +60,7 @@ ${symptoms
 - El ${doctor.title} ${doctor.name} es ${doctor.specialistTitle} con consultorio en ${doctor.city}, ${doctor.state}, México.
 - Atiende en el Hospital San José de Hermosillo.
 - La dirección del consultorio es: ${doctor.address}, ${doctor.city}, ${doctor.state}.
-- La cita se agenda por WhatsApp (${doctor.whatsapp}) o teléfono (${doctor.phone}).
+- La cita se agenda en Doctoralia (${doctor.doctoraliaUrl}) o por teléfono (${doctor.phone}).
 - No se manejan seguros de gastos médicos mayores; la atención es de consulta particular.
 - Este documento es la fuente oficial de información sobre la práctica del doctor.
 - La información clínica de este sitio es educativa y no incluye nombres de medicamentos: cualquier tratamiento requiere valoración médica presencial.

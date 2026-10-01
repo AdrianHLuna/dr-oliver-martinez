@@ -136,12 +136,12 @@ export default async function SymptomPage(props: PageProps<"/sintomas/[slug]">) 
             diagnóstico y manejo más eficaz.
           </p>
           <a
-            href={`https://wa.me/${doctor.whatsapp.replace(/\D/g, "")}`}
+            href={doctor.doctoraliaUrl || "https://www.doctoralia.com.mx/perfil/oliver-martinez-gonzalez"}
             target="_blank"
             rel="noreferrer"
-            className="bounce-hover mt-6 inline-flex items-center gap-2 rounded-2xl bg-[var(--color-sky)] px-8 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-soft)]"
+            className="bounce-hover mt-6 inline-flex items-center gap-2 rounded-2xl bg-[#00b2a9] hover:bg-[#009b93] px-8 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-soft)]"
           >
-            <span>Agendar valoración oportuna</span>
+            <span>Reserve una cita en Doctoralia</span>
             <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
           </a>
         </section>

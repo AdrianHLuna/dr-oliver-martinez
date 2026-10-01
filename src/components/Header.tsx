@@ -70,12 +70,12 @@ export default function Header() {
             ))}
           </nav>
           <a
-            href={`https://wa.me/${doctor.whatsapp.replace(/\D/g, "")}`}
+            href={doctor.doctoraliaUrl || "https://www.doctoralia.com.mx/perfil/oliver-martinez-gonzalez"}
             target="_blank"
             rel="noreferrer"
-            className="bounce-pop whitespace-nowrap shrink-0 rounded-full bg-[#25D366] px-4 py-2 text-xs font-semibold text-white shadow-[var(--shadow-soft)]"
+            className="bounce-pop whitespace-nowrap shrink-0 rounded-full bg-[#00b2a9] hover:bg-[#009b93] px-4 py-2 text-xs font-semibold text-white shadow-[var(--shadow-soft)]"
           >
-            WhatsApp
+            Reserve una cita
           </a>
         </div>
 

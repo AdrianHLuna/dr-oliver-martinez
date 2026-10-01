@@ -16,7 +16,7 @@ export const doctor: DoctorProfile = {
   cedulaEspecialidad: "12146161",
   cedulaEspecialidadInstitucion: "UDG",
   phone: "+526621090580",
-  whatsapp: "+526622985448",
+  doctoraliaUrl: "https://www.doctoralia.com.mx/perfil/oliver-martinez-gonzalez",
   // PENDIENTE: no se dio correo en el intake.
   email: "contacto@dr-oliver-martinez.com",
   address: "Boulevard José María Morelos #340, Hospital San José, 4to piso, módulo O, Consultorio 409",
@@ -38,8 +38,8 @@ export const doctor: DoctorProfile = {
   schedule: "Lunes a viernes de 8:00 a 21:00, sábados de 8:00 a 13:00",
   openingHours: ["Mo-Fr 08:00-21:00", "Sa 08:00-13:00"],
   acceptingNewPatients: true,
-  // PENDIENTE: no se encontró carpeta de fotos reales en el repo.
-  photo: "/doctor-placeholder.jpg",
+  photo: "/images/hero.jpg",
+  aboutPhoto: "/images/aboutme.jpg",
   bio: "El Dr. Oliver Martínez González es médico especialista en Neumología, con formación como Médico Cirujano por la Universidad de Sonora (UNISON) y especialidad en Neumología por la Universidad de Guadalajara (UDG). Atiende en el Hospital San José de Hermosillo, Sonora, donde ofrece valoración, diagnóstico y seguimiento de enfermedades del sistema respiratorio, desde padecimientos frecuentes como el asma y la bronquitis hasta condiciones que requieren estudios especializados de función pulmonar y del sueño.",
   philosophy:
     "Mi compromiso es ofrecer una atención respiratoria clara y basada en evidencia, explicando cada diagnóstico y estudio en un lenguaje que el paciente pueda entender, para que tome decisiones informadas sobre su propia salud.",

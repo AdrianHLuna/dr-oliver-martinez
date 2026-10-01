@@ -30,7 +30,7 @@ export default function AvisoDePrivacidadPage() {
           <h2 className="font-semibold text-[var(--color-navy)]">Datos Personales Recabados</h2>
           <p className="mt-1">
             Se recaban datos de identificación y contacto (nombre, teléfono, correo electrónico) cuando el
-            paciente los proporciona voluntariamente por WhatsApp, teléfono o correo electrónico.
+            paciente los proporciona voluntariamente a través de Doctoralia, teléfono o correo electrónico.
           </p>
         </div>
 
@@ -46,7 +46,7 @@ export default function AvisoDePrivacidadPage() {
           <h2 className="font-semibold text-[var(--color-navy)]">Derechos ARCO</h2>
           <p className="mt-1">
             Usted tiene derecho a Acceder, Rectificar, Cancelar u Oponerse (derechos ARCO) al tratamiento de
-            sus datos personales. Para ejercerlos, comuníquese al teléfono {doctor.phone} o por WhatsApp.
+            sus datos personales. Para ejercerlos, comuníquese al teléfono {doctor.phone} o por correo electrónico.
           </p>
         </div>
 

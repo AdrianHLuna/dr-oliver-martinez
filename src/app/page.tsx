@@ -1,17 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, GraduationCap, Award, ShieldCheck, Stethoscope, Phone, MessageCircle } from "lucide-react";
+import { ArrowUpRight, GraduationCap, Award, ShieldCheck, Stethoscope, Phone, Calendar } from "lucide-react";
 import { doctor, diseases, services, symptoms } from "@/data";
 import { formatCredentials } from "@/lib/credentials";
 import { generateHomeSchemas } from "@/lib/schemas";
 import StructuredData from "@/components/StructuredData";
 import MasonryGrid from "@/components/MasonryGrid";
 import DoctorPortrait from "@/components/DoctorPortrait";
+import DoctoraliaWidget from "@/components/DoctoraliaWidget";
 
 export default function HomePage() {
-  const whatsappHref = `https://wa.me/${doctor.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(
-    `Hola, ${doctor.title} ${doctor.name}. Vi su página web y me gustaría agendar una cita.`
-  )}`;
+  const doctoraliaHref = doctor.doctoraliaUrl || "https://www.doctoralia.com.mx/perfil/oliver-martinez-gonzalez";
 
   return (
     <>
@@ -63,13 +62,13 @@ export default function HomePage() {
 
               <div className="mt-6 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
                 <a
-                  href={whatsappHref}
+                  href={doctoraliaHref}
                   target="_blank"
                   rel="noreferrer"
-                  className="bounce-hover inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--color-sky)] px-7 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-lift)]"
+                  className="bounce-hover inline-flex items-center justify-center gap-2 rounded-2xl bg-[#00b2a9] hover:bg-[#009b93] px-7 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-lift)]"
                 >
-                  <MessageCircle className="h-4 w-4" aria-hidden="true" />
-                  <span>Agendar cita por WhatsApp</span>
+                  <Calendar className="h-4 w-4" aria-hidden="true" />
+                  <span>Reserve una cita en Doctoralia</span>
                 </a>
                 <a
                   href={`tel:${doctor.phone}`}
@@ -102,7 +101,7 @@ export default function HomePage() {
             <DoctorPortrait variant="about" />
           </div>
 
-          {/* Información biográfica y profesional */}
+          {/* Información biographical y profesional */}
           <div className="flex flex-col items-center text-center lg:col-span-7 lg:items-start lg:text-left">
             <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-sky)]">
               Sobre el especialista
@@ -151,8 +150,26 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Widget de reserva de Doctoralia */}
+      <section id="reserva" className="border-t border-[var(--color-line)] bg-[var(--color-cloud)] py-20">
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-sky)]">
+            Reserva de Citas en Línea
+          </span>
+          <h2 className="mt-2 text-3xl font-bold text-[var(--color-navy)] sm:text-4xl">
+            Agenda tu Consulta en Doctoralia
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-base text-[var(--color-slate)]">
+            Consulta los horarios disponibles y reserva tu cita directamente con el {doctor.title} {doctor.name}.
+          </p>
+          <div className="mt-8 flex justify-center">
+            <DoctoraliaWidget className="w-full max-w-2xl text-left" />
+          </div>
+        </div>
+      </section>
+
       {/* Enfermedades — masonry de tamaños mixtos */}
-      <section id="enfermedades" className="border-t border-[var(--color-line)] bg-[var(--color-cloud)] py-20">
+      <section id="enfermedades" className="border-t border-[var(--color-line)] py-20">
         <div className="mx-auto max-w-6xl px-6">
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-[var(--color-line)] pb-5">
             <div>
@@ -179,7 +196,7 @@ export default function HomePage() {
       </section>
 
       {/* Servicios — masonry de tamaños mixtos */}
-      <section id="servicios" className="border-t border-[var(--color-line)] py-20">
+      <section id="servicios" className="border-t border-[var(--color-line)] bg-[var(--color-cloud)] py-20">
         <div className="mx-auto max-w-6xl px-6">
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-[var(--color-line)] pb-5">
             <div>
@@ -206,7 +223,7 @@ export default function HomePage() {
       </section>
 
       {/* Síntomas — masonry de tamaños mixtos */}
-      <section id="sintomas" className="border-t border-[var(--color-line)] bg-[var(--color-cloud)] py-20">
+      <section id="sintomas" className="border-t border-[var(--color-line)] py-20">
         <div className="mx-auto max-w-6xl px-6">
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-[var(--color-line)] pb-5">
             <div>
@@ -232,19 +249,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Honorarios y seguros — sin precio numérico (pendiente de confirmar
-          con el doctor), transparente sobre que no se manejan seguros. */}
-      <section className="border-t border-[var(--color-line)] py-20">
+      {/* Honorarios y seguros */}
+      <section className="border-t border-[var(--color-line)] bg-[var(--color-cloud)] py-20">
         <div className="mx-auto max-w-4xl px-6">
           <div className="rounded-[2rem] border border-[var(--color-line)] bg-white p-8 text-center shadow-[var(--shadow-soft)] sm:p-12">
             <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-sky)]">
               Honorarios y forma de atención
             </span>
             <h2 className="mt-2 text-2xl font-bold text-[var(--color-navy)] sm:text-3xl">
-              Contáctanos para conocer el costo de tu consulta
+              Reserva de cita y consulta
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-sm text-[var(--color-slate)] sm:text-base">
-              El costo de la consulta se confirma directamente por WhatsApp o teléfono antes de tu cita.
+              Puedes verificar horarios disponibles y agendar directamente en Doctoralia o por teléfono.
             </p>
             {doctor.insurances && doctor.insurances.length > 0 && (
               <div className="mx-auto mt-6 flex max-w-lg items-start gap-2.5 rounded-2xl border border-[var(--color-line)] bg-[var(--color-cloud)] p-4 text-left text-sm text-[var(--color-slate)]">
@@ -269,12 +285,12 @@ export default function HomePage() {
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <a
-              href={whatsappHref}
+              href={doctoraliaHref}
               target="_blank"
               rel="noreferrer"
-              className="bounce-hover inline-flex items-center gap-2 rounded-2xl bg-[var(--color-sky)] px-8 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-lift)]"
+              className="bounce-hover inline-flex items-center gap-2 rounded-2xl bg-[#00b2a9] hover:bg-[#009b93] px-8 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-lift)]"
             >
-              <span>Escribir por WhatsApp</span>
+              <span>Reserve una cita en Doctoralia</span>
               <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </a>
             <Link

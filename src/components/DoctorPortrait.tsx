@@ -9,9 +9,15 @@ interface DoctorPortraitProps {
   className?: string;
   src?: string;
   variant?: "hero" | "about";
+  objectPosition?: string;
 }
 
-export default function DoctorPortrait({ className = "", src, variant = "hero" }: DoctorPortraitProps) {
+export default function DoctorPortrait({
+  className = "",
+  src,
+  variant = "hero",
+  objectPosition = "78% 20%",
+}: DoctorPortraitProps) {
   const imageSrc = src || (variant === "about" ? (doctor.aboutPhoto || doctor.photo) : doctor.photo);
   const [failed, setFailed] = useState(!imageSrc || imageSrc === "/doctor-placeholder.jpg");
 
@@ -30,7 +36,8 @@ export default function DoctorPortrait({ className = "", src, variant = "hero" }
                 src={imageSrc}
                 alt={`${doctor.title} ${doctor.name}`}
                 fill
-                className="object-cover object-top transition-transform duration-500 hover:scale-105"
+                className="object-cover transition-transform duration-500 hover:scale-105"
+                style={{ objectPosition }}
                 sizes="(max-width: 1024px) 100vw, 450px"
                 onError={() => setFailed(true)}
               />
@@ -104,7 +111,8 @@ export default function DoctorPortrait({ className = "", src, variant = "hero" }
               alt={`${doctor.title} ${doctor.name}`}
               fill
               priority
-              className="object-cover object-top transition-transform duration-500 hover:scale-105"
+              className="object-cover transition-transform duration-500 hover:scale-105"
+              style={{ objectPosition }}
               sizes="(max-width: 1024px) 100vw, 450px"
               onError={() => setFailed(true)}
             />

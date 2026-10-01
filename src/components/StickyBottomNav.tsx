@@ -5,10 +5,7 @@ import { trackEvent } from "@/lib/analytics";
 
 /** Sticky Bottom Nav móvil — AISO v3.1 §3.1. Solo visible en móvil (md:hidden). */
 export default function StickyBottomNav() {
-  const cleanWhatsapp = doctor.whatsapp.replace(/\D/g, "");
-  const message = encodeURIComponent(
-    `Hola, ${doctor.title} ${doctor.name}. Vi su página web y me gustaría agendar una cita.`
-  );
+  const doctoraliaLink = doctor.doctoraliaUrl || "https://www.doctoralia.com.mx/perfil/oliver-martinez-gonzalez";
 
   return (
     <div
@@ -18,19 +15,19 @@ export default function StickyBottomNav() {
       <a
         href={`tel:${doctor.phone}`}
         onClick={() => trackEvent("clic_agendar_cita", { source: "sticky_nav" })}
-        className="relative flex w-[70%] min-h-[44px] items-center justify-center gap-2 bg-[var(--color-navy)] py-3 text-sm font-semibold text-white"
+        className="relative flex w-[60%] min-h-[44px] items-center justify-center gap-2 bg-[var(--color-navy)] py-3 text-sm font-semibold text-white"
       >
         <span className="absolute inset-0 motion-safe:animate-ping bg-[var(--color-navy)]/50 -z-10" aria-hidden="true" />
-        Agendar Cita
+        Llamar al consultorio
       </a>
       <a
-        href={`https://wa.me/${cleanWhatsapp}?text=${message}`}
+        href={doctoraliaLink}
         target="_blank"
         rel="noreferrer"
-        onClick={() => trackEvent("clic_whatsapp", { source: "sticky_nav" })}
-        className="flex w-[30%] min-h-[44px] items-center justify-center bg-[#25D366] py-3 text-sm font-semibold text-white"
+        onClick={() => trackEvent("clic_doctoralia", { source: "sticky_nav" })}
+        className="flex w-[40%] min-h-[44px] items-center justify-center bg-[#00b2a9] py-3 text-sm font-semibold text-white"
       >
-        WhatsApp
+        Doctoralia
       </a>
     </div>
   );

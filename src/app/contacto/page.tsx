@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Phone, MessageCircle, MapPin, Clock } from "lucide-react";
+import { Phone, Calendar, MapPin, Clock } from "lucide-react";
 import { doctor } from "@/data";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import MapFacade from "@/components/MapFacade";
+import DoctoraliaWidget from "@/components/DoctoraliaWidget";
 
 export const metadata: Metadata = {
   title: "Contacto",
@@ -10,11 +11,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contacto" },
 };
 
-// Command center de 2 columnas, tamaño moderado (ni el mapa secundario en
-// recuadro fijo de Gustavo, ni el mapa full-width dominante de otros
-// sitios): dirección + horario a un lado, mapa al otro, estático y simple.
 export default function ContactoPage() {
   const fullAddress = `${doctor.address}, ${doctor.city}, ${doctor.state}`;
+  const doctoraliaLink = doctor.doctoraliaUrl || "https://www.doctoralia.com.mx/perfil/oliver-martinez-gonzalez";
 
   return (
     <main>
@@ -56,22 +55,22 @@ export default function ContactoPage() {
 
             <div className="rounded-2xl border border-[var(--color-line)] bg-white p-6 shadow-[var(--shadow-soft)]">
               <h2 className="text-xs font-bold uppercase tracking-widest text-[var(--color-sky)]">
-                Contacto directo
+                Reserva de citas
               </h2>
               <ul className="mt-4 space-y-3">
                 <li>
                   <a
-                    href={`https://wa.me/${doctor.whatsapp.replace(/\D/g, "")}`}
+                    href={doctoraliaLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="bounce-pop flex items-center gap-3.5 rounded-xl border border-emerald-100 bg-emerald-50 p-3.5 text-sm font-semibold text-emerald-900"
+                    className="bounce-pop flex items-center gap-3.5 rounded-xl border border-teal-100 bg-teal-50 p-3.5 text-sm font-semibold text-teal-900"
                   >
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-500 text-white">
-                      <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#00b2a9] text-white">
+                      <Calendar className="h-4 w-4" aria-hidden="true" />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <span className="block text-[11px] uppercase tracking-wider opacity-70">WhatsApp</span>
-                      <span>{doctor.whatsapp}</span>
+                      <span className="block text-[11px] uppercase tracking-wider opacity-70">Doctoralia</span>
+                      <span>Reserve una cita en línea</span>
                     </div>
                   </a>
                 </li>
@@ -89,21 +88,27 @@ export default function ContactoPage() {
                     </div>
                   </a>
                 </li>
-                {/* Correo omitido a propósito: doctor.email es un placeholder
-                    PENDIENTE (el intake no dio uno real) — mostrarlo aquí
-                    invitaría a escribir a una dirección no monitoreada. Solo
-                    se usa internamente para JSON-LD/esquema, nunca en UI. */}
               </ul>
             </div>
           </div>
 
           <div>
-            <MapFacade address={fullAddress} whatsapp={doctor.whatsapp} />
+            <MapFacade address={fullAddress} />
             <p className="mt-3 text-center text-xs text-[var(--color-slate)]">
               Hospital San José, 4to piso, módulo O, consultorio 409.
             </p>
           </div>
         </div>
+
+        {/* Embedded Doctoralia Widget section on Contact page */}
+        <section className="mt-12 border-t border-[var(--color-line)] pt-10">
+          <h2 className="mb-4 text-xl font-bold text-[var(--color-navy)] text-center">
+            Calendario de Citas Doctoralia
+          </h2>
+          <div className="flex justify-center">
+            <DoctoraliaWidget className="w-full max-w-2xl text-left" />
+          </div>
+        </section>
       </div>
     </main>
   );

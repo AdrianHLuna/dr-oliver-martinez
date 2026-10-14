@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { doctor } from "@/data";
 import { roboto } from "@/lib/fonts";
-import GoogleAnalytics from "@/components/GoogleAnalytics";
 import CookieConsentBanner from "@/components/CookieConsentBanner";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -35,8 +34,54 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="es-MX" className={roboto.variable}>
+      <head>
+        {/* Google Tag Manager */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-P73G3TZF');`,
+          }}
+        />
+        {/* End Google Tag Manager */}
+
+        {/* Google tag (gtag.js) - Google Ads */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-10872455356" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-10872455356');`,
+          }}
+        />
+
+        {/* Google tag (gtag.js) - Google Analytics */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-92PHW3M5KT" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-92PHW3M5KT');`,
+          }}
+        />
+      </head>
       <body className="pb-16 md:pb-0">
-        <GoogleAnalytics />
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-P73G3TZF"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
+        {/* End Google Tag Manager (noscript) */}
         <Header />
         {children}
         <Footer />

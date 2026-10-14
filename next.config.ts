@@ -5,8 +5,8 @@ import type { NextConfig } from "next";
 // React nunca usa eval() en producción, así que la build de producción no lo necesita.
 const scriptSrc =
   process.env.NODE_ENV === "production"
-    ? "'self' 'unsafe-inline' https://www.googletagmanager.com"
-    : "'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com";
+    ? "'self' 'unsafe-inline' https://www.googletagmanager.com https://*.googletagmanager.com https://*.google-analytics.com https://*.googleadservices.com https://*.doubleclick.net https://platform.docplanner.com https://*.docplanner.com"
+    : "'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.googletagmanager.com https://*.google-analytics.com https://*.googleadservices.com https://*.doubleclick.net https://platform.docplanner.com https://*.docplanner.com";
 
 const securityHeaders = [
   {
@@ -32,7 +32,7 @@ const securityHeaders = [
   {
     key: "Content-Security-Policy",
     value:
-      `default-src 'self'; script-src ${scriptSrc}; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.google-analytics.com https://www.googletagmanager.com; frame-src https://www.youtube-nocookie.com https://www.google.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'`,
+      `default-src 'self'; script-src ${scriptSrc}; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.googletagmanager.com https://ad.doubleclick.net https://*.doubleclick.net https://www.google.com https://*.google.com https://www.googleadservices.com https://*.googleadservices.com https://*.docplanner.com https://*.doctoralia.com.mx; frame-src https://www.youtube-nocookie.com https://www.google.com https://*.google.com https://www.googletagmanager.com https://*.googletagmanager.com https://*.doubleclick.net https://*.docplanner.com https://*.doctoralia.com.mx; object-src 'none'; base-uri 'self'; frame-ancestors 'none'`,
   },
 ];
 
